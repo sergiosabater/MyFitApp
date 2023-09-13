@@ -1,7 +1,9 @@
 package com.sergiosabater.myfit.ui.screens
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -13,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sergiosabater.myfit.model.DayOfWeek
+import com.sergiosabater.myfit.model.DaysOfMonth
 import com.sergiosabater.myfit.ui.components.Calendar
 
 @Composable
@@ -24,7 +28,13 @@ fun MainScreen(onAddButtonClicked: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         // Calendar composable dibujará el calendario
-        Calendar()
+        Calendar(
+            modifier = Modifier.align(Alignment.TopCenter),
+            startDayOfWeek = DayOfWeek.Sunday,
+            totalDays = DaysOfMonth(31)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Botón flotante en la parte inferior de la pantalla
         FloatingActionButton(
