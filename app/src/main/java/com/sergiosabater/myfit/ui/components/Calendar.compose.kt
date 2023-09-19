@@ -18,9 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.sergiosabater.myfit.model.DayOfWeek
 import com.sergiosabater.myfit.model.DaysOfMonth
 
@@ -28,15 +30,37 @@ import com.sergiosabater.myfit.model.DaysOfMonth
 fun Calendar(
     modifier: Modifier = Modifier,
     startDayOfWeek: DayOfWeek,
-    totalDays: DaysOfMonth
+    totalDays: DaysOfMonth,
+    month: String,
+    year: Int
 ) {
     Column(
         modifier = modifier
             .padding(16.dp)
-            .border(2.dp, Color.Blue, shape = RoundedCornerShape(24.dp)),  // Bordes redondeados aquí),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .border(2.dp, Color.Blue, shape = RoundedCornerShape(24.dp)),
+        verticalArrangement = Arrangement.Top
     ) {
+        // Encabezado con el nombre del mes y el año
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Blue)
+                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "$month $year",
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+
+        // Encabezado con los nombres de los días de la semana
         WeekDaysHeader()
+
+        // Grid con los días del mes
         CalendarDaysGrid(startDayOfWeek, totalDays)
     }
 }
@@ -48,14 +72,13 @@ fun WeekDaysHeader() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))  // Agrega clip aquí
-            .background(Color.Blue),  // Fondo azul para la Row entera
+            .background(Color.Blue),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         daysOfWeek.forEach { dayName ->
             Box(
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(1f, fill = false)
                     .aspectRatio(1f)
                     .padding(4.dp),
                 contentAlignment = Alignment.Center
@@ -72,7 +95,6 @@ fun WeekDaysHeader() {
 
 @Composable
 fun CalendarDaysGrid(startDayOfWeek: DayOfWeek, totalDays: DaysOfMonth) {
-
     val days = (1..totalDays.value).toList()
     val emptyDaysAtStart = startDayOfWeek.ordinal - 1
     val totalDaysWithEmptySpaces = emptyDaysAtStart + days.size
@@ -113,7 +135,7 @@ fun DayCell(day: Int, hasEvent: Boolean) {
             if (hasEvent) {
                 Box(
                     modifier = Modifier
-                        .size(40.dp) // Asegura que sea cuadrado
+                        .size(40.dp)
                         .background(Color.Blue, shape = CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
@@ -129,7 +151,10 @@ fun DayCell(day: Int, hasEvent: Boolean) {
 @Preview(showBackground = true)
 @Composable
 fun CalendarPreview() {
-    Calendar(startDayOfWeek = DayOfWeek.Wednesday, totalDays = DaysOfMonth(31))
+    Calendar(
+        startDayOfWeek = DayOfWeek.Wednesday,
+        totalDays = DaysOfMonth(31),
+        month = "Septiembre",
+        year = 2023
+    )
 }
-
-

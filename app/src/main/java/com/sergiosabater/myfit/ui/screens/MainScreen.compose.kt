@@ -31,7 +31,9 @@ fun MainScreen(onAddButtonClicked: () -> Unit) {
         Calendar(
             modifier = Modifier.align(Alignment.TopCenter),
             startDayOfWeek = DayOfWeek.Sunday,
-            totalDays = DaysOfMonth(31)
+            totalDays = DaysOfMonth(31),
+            month = "Septiembre",
+            year = 2023
         )
 
         Spacer(modifier = Modifier.height(16.dp))
