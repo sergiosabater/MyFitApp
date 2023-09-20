@@ -31,7 +31,8 @@ fun Calendar(
     startDayOfWeek: DayOfWeek,
     totalDays: DaysOfMonth,
     month: String,
-    year: Int
+    year: Int,
+    currentDay: Int  // Nuevo parámetro para recibir el día actual del mes
 ) {
     Column(
         modifier = modifier
@@ -59,7 +60,7 @@ fun Calendar(
         WeekDaysHeader()
 
         // Grid con los días del mes
-        CalendarDaysGrid(startDayOfWeek, totalDays)
+        CalendarDaysGrid(startDayOfWeek, totalDays, currentDay) // Pasar el día actual a la función
     }
 }
 
@@ -92,7 +93,7 @@ fun WeekDaysHeader() {
 }
 
 @Composable
-fun CalendarDaysGrid(startDayOfWeek: DayOfWeek, totalDays: DaysOfMonth) {
+fun CalendarDaysGrid(startDayOfWeek: DayOfWeek, totalDays: DaysOfMonth, currentDay: Int) {  // Añadir el parámetro aquí
     val days = (1..totalDays.value).toList()
     val emptyDaysAtStart = startDayOfWeek.ordinal - 1
     val totalDaysWithEmptySpaces = emptyDaysAtStart + days.size
@@ -113,7 +114,7 @@ fun CalendarDaysGrid(startDayOfWeek: DayOfWeek, totalDays: DaysOfMonth) {
                         .padding(4.dp)
                 ) {
                     if (day != 0) {
-                        DayCell(day, day in listOf(1, 5, 8, 15))
+                        DayCell(day, day in listOf(1, 5, 8, 15), day == currentDay) // Pasar si el día es el actual
                     }
                 }
             }
@@ -122,7 +123,7 @@ fun CalendarDaysGrid(startDayOfWeek: DayOfWeek, totalDays: DaysOfMonth) {
 }
 
 @Composable
-fun DayCell(day: Int, hasEvent: Boolean) {
+fun DayCell(day: Int, hasEvent: Boolean, isCurrentDay: Boolean = false) { // Añadir el nuevo parámetro
     if (day != 0) {
         Box(
             modifier = Modifier
@@ -139,6 +140,15 @@ fun DayCell(day: Int, hasEvent: Boolean) {
                 ) {
                     Text(text = day.toString(), color = Color.White)
                 }
+            } else if (isCurrentDay) {  // Verificar si es el día actual
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .border(2.dp, Color.Blue, CircleShape), // Bordo azul
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = day.toString(), color = Color.Black)
+                }
             } else {
                 Text(text = day.toString(), color = Color.Black)
             }
@@ -153,6 +163,7 @@ fun CalendarPreview() {
         startDayOfWeek = DayOfWeek.Wednesday,
         totalDays = DaysOfMonth(31),
         month = "Septiembre",
-        year = 2023
+        year = 2023,
+        currentDay = 19  // Ejemplo: el día actual es el 19 de Septiembre
     )
 }
