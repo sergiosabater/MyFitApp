@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -44,8 +43,7 @@ fun Calendar(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Blue)
-                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)),
+                .background(Color.Blue, shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -53,7 +51,7 @@ fun Calendar(
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 fontSize = 20.sp,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(top = 24.dp)
             )
         }
 
