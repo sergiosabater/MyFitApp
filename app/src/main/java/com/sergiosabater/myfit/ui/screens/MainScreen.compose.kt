@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.sergiosabater.myfit.model.DayOfWeek
 import com.sergiosabater.myfit.model.DaysOfMonth
 import com.sergiosabater.myfit.ui.components.Calendar
+import com.sergiosabater.myfit.utils.getCurrentMonthModel
 
 @Composable
 fun MainScreen(onAddButtonClicked: () -> Unit, paddingValues: PaddingValues) {
@@ -32,11 +33,7 @@ fun MainScreen(onAddButtonClicked: () -> Unit, paddingValues: PaddingValues) {
         // Calendar composable dibujará el calendario
         Calendar(
             modifier = Modifier.align(Alignment.TopCenter),
-            startDayOfWeek = DayOfWeek.Friday,
-            totalDays = DaysOfMonth(30),
-            month = "Septiembre",
-            year = 2023,
-            currentDay = 20
+            model = getCurrentMonthModel()
         )
 
         Spacer(modifier = Modifier.height(16.dp))

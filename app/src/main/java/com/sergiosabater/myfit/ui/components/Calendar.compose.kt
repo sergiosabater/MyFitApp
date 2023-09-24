@@ -22,17 +22,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sergiosabater.myfit.model.CalendarModel
 import com.sergiosabater.myfit.model.DayOfWeek
 import com.sergiosabater.myfit.model.DaysOfMonth
 
 @Composable
 fun Calendar(
     modifier: Modifier = Modifier,
-    startDayOfWeek: DayOfWeek,
-    totalDays: DaysOfMonth,
-    month: String,
-    year: Int,
-    currentDay: Int  // Nuevo parámetro para recibir el día actual del mes
+    model: CalendarModel
 ) {
     Column(
         modifier = modifier
@@ -48,7 +45,7 @@ fun Calendar(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "$month $year",
+                text = "${model.month} ${model.year}", // Se usa la información del modelo
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 fontSize = 20.sp,
@@ -60,7 +57,7 @@ fun Calendar(
         WeekDaysHeader()
 
         // Grid con los días del mes
-        CalendarDaysGrid(startDayOfWeek, totalDays, currentDay) // Pasar el día actual a la función
+        CalendarDaysGrid(model) // Pasar el día actual a la función
     }
 }
 
@@ -93,9 +90,9 @@ fun WeekDaysHeader() {
 }
 
 @Composable
-fun CalendarDaysGrid(startDayOfWeek: DayOfWeek, totalDays: DaysOfMonth, currentDay: Int) {  // Añadir el parámetro aquí
-    val days = (1..totalDays.value).toList()
-    val emptyDaysAtStart = startDayOfWeek.ordinal - 1
+fun CalendarDaysGrid(model: CalendarModel) {  // Añadir el parámetro aquí
+    val days = (1..model.totalDays.value).toList()
+    val emptyDaysAtStart = model.startDayOfWeek.ordinal - 1
     val totalDaysWithEmptySpaces = emptyDaysAtStart + days.size
     val emptyDaysAtEnd =
         if (totalDaysWithEmptySpaces % 7 == 0) 0 else 7 - (totalDaysWithEmptySpaces % 7)
@@ -114,7 +111,7 @@ fun CalendarDaysGrid(startDayOfWeek: DayOfWeek, totalDays: DaysOfMonth, currentD
                         .padding(4.dp)
                 ) {
                     if (day != 0) {
-                        DayCell(day, day in listOf(1, 5, 8, 15), day == currentDay) // Pasar si el día es el actual
+                        DayCell(day, day in listOf(1, 5, 8, 15), day == model.currentDay)
                     }
                 }
             }
@@ -159,11 +156,15 @@ fun DayCell(day: Int, hasEvent: Boolean, isCurrentDay: Boolean = false) { // Añ
 @Preview(showBackground = true)
 @Composable
 fun CalendarPreview() {
-    Calendar(
+    // Creación de un objeto CalendarModel con la información deseada
+    val sampleCalendarModel = CalendarModel(
         startDayOfWeek = DayOfWeek.Wednesday,
         totalDays = DaysOfMonth(31),
         month = "Septiembre",
         year = 2023,
         currentDay = 19  // Ejemplo: el día actual es el 19 de Septiembre
     )
+
+    // Utilización del objeto CalendarModel en el composable Calendar
+    Calendar(model = sampleCalendarModel)
 }
