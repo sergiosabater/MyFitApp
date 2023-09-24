@@ -1,6 +1,7 @@
 package com.sergiosabater.myfit.ui.screens
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -21,11 +22,11 @@ import com.sergiosabater.myfit.model.DaysOfMonth
 import com.sergiosabater.myfit.ui.components.Calendar
 
 @Composable
-fun MainScreen(onAddButtonClicked: () -> Unit) {
+fun MainScreen(onAddButtonClicked: () -> Unit, paddingValues: PaddingValues) {
 
     // Usamos Box para permitir la superposición de elementos
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(paddingValues),
         contentAlignment = Alignment.Center
     ) {
         // Calendar composable dibujará el calendario
@@ -58,5 +59,5 @@ fun MainScreen(onAddButtonClicked: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    MainScreen(onAddButtonClicked = {})
+    MainScreen(onAddButtonClicked = {}, PaddingValues())
 }
