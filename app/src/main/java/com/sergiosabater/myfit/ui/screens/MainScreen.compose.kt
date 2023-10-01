@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -43,12 +44,16 @@ fun MainScreen(onAddButtonClicked: () -> Unit, paddingValues: PaddingValues) {
             onClick = { onAddButtonClicked },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 32.dp),
+                .padding(bottom = 32.dp)
+                .size(72.dp),
             shape = CircleShape,
             containerColor = Color.Blue,
             contentColor = Color.White
         ) {
-            Icon(Icons.Default.Add, contentDescription = "Add")
+            Icon(
+                Icons.Default.Add,
+                contentDescription = "Add",
+                modifier = Modifier.size(36.dp))
         }
     }
 }

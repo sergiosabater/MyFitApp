@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.sergiosabater.myfit.ui.components.CustomTopAppBar
 import com.sergiosabater.myfit.ui.screens.MainScreen
 import com.sergiosabater.myfit.ui.theme.MyFitTheme
 
@@ -39,18 +40,9 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         topBar = {
-                            CenterAlignedTopAppBar(
-                                title = {
-                                    Text(text = "MyFit")
-                                },
-                                navigationIcon = {
-                                    IconButton(onClick = { /*TODO*/ }) {
-                                        Icon(
-                                            imageVector = Icons.Default.Menu,
-                                            contentDescription = "Go back")
-                                        
-                                    }
-                                },
+                            CustomTopAppBar(
+                                title = "MyFit",
+                                onNavIconClick = { /*TODO*/ },
                                 actions = {
                                     IconButton(onClick = { /*TODO*/ }) {
                                         Icon(
@@ -64,12 +56,7 @@ class MainActivity : ComponentActivity() {
                                             contentDescription = null
                                         )
                                     }
-                                },
-                                colors =  TopAppBarDefaults.smallTopAppBarColors(
-                                    containerColor = Color.Blue,
-                                    titleContentColor = Color.White,
-                                    navigationIconContentColor = Color.White,
-                                    actionIconContentColor = Color.White)
+                                }
                             )
                         }
                     ) {
